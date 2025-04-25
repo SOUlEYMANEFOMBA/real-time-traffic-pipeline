@@ -1,0 +1,27 @@
+{
+    "name": "Build ETL Data streaming Pipelines with PythonOperator using Apache Airflow -kafka-spark-cansandra-postgres",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "spark-master",
+    "runServices": ["zookeeper","broker","schema-registry","control-center","webserver","scheduler","postgres","spark-worker"],
+    "workspaceFolder": "/workspace",
+
+    "postCreateCommand": "pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --user -r ../.devcontainer/requirements.txt",
+
+    "customizations": {
+        "vscode": {
+            "extensions": ["ms-python.python","njpwerner.autodocstring","KevinRose.vsc-python-indent"]
+        }
+    }
+
+    // "customizations": {
+    //   "vscode": {
+    //     "extensions": [
+    //       "ms-python.python",
+    //       "ms-azuretools.vscode-docker"
+    //     ]
+    //   },
+    //   "settings": {
+    //     "python.pythonPath": "/usr/local/bin/python"
+    //   }
+    // }
+  }
