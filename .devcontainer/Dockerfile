@@ -1,4 +1,4 @@
-FROM apache/airflow:2.6.0-python3.9
+FROM  apache/airflow:2.6.0-python3.9
 
 # Définir le répertoire de travail
 WORKDIR /opt/airflow
