@@ -4,10 +4,10 @@ FROM  apache/airflow:2.6.0-python3.9
 WORKDIR /opt/airflow
 
 # ## Copie le fichier requierements.txt
-COPY requirements.txt /opt/airflow/requirements.txt
+COPY requirements-airflow.txt /opt/airflow/requirements-airflow.txt
 ##Installer les dependances 
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements-airflow.txt
 ##Copie le scipt init_airflow dans le container
 
 COPY init_airflow.sh /opt/airflow/init_airflow.sh
