@@ -1,11 +1,12 @@
 {
     "name": "REAL-TIME-TRAFFIC-PIPELINE",
     "dockerComposeFile": "docker-compose.yml",
-    "service": "spark-master",
-    "runServices": ["webserver","scheduler","postgres","spark-worker"],
+    "service": "python",
+    "runServices": ["webserver","scheduler","postgres","spark-worker","spark-master"],
     "workspaceFolder": "/workspace",
 
-    "postCreateCommand": "pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --user -r ./.devcontainer/requirements.txt",
+    "postCreateCommand": "pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --user -r requirements-python-dev.txt ",
+
 
     "customizations": {
         "vscode": {

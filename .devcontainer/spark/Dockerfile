@@ -1,9 +1,16 @@
 FROM bitnami/spark:latest
 
-# Passer en root pour installer les dépendances
+# Installer les outils nécessaires
 USER root
+# #Créer un utilisateur dédié
+# RUN groupadd -r spark && useradd -r -g spark spark
 
-# Installer les outils nécessaires + git
+# # Changer les permissions sur le répertoire Spark
+# RUN chown -R spark:spark /opt/bitnami/spark
+
+# # Créer le répertoire /home/spark avec les bonnes permissions
+# RUN mkdir -p /home/spark && chown spark:spark /home/spark
+
 RUN apt-get update && \
     apt-get install -y wget python3 python3-pip git && \
     mkdir -p /usr/lib/jvm && \
@@ -14,17 +21,20 @@ RUN apt-get update && \
 
 # Définir JAVA_HOME
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+# Configurer le PATH
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 
-
-
-
-# Créer un répertoire pour Ivy, en tant qu'utilisateur patrick
+# Créer un répertoire pour Ivy
 RUN mkdir -p /root/.ivy2
+# copier le requirement 
+COPY requirements-spark.txt .
 
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements-spark.txt
+# # Définir le répertoire de travail
+# WORKDIR /app
 
-
-# Démarrer avec un shell interactif
+# Commencer un shell interactif par défaut
 CMD ["bash"]
-
