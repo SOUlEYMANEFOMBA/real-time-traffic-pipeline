@@ -22,10 +22,10 @@ def fetch_traffic_incidents():
     # Liste des bbox avec commentaires pour chaque zone
 
     bboxes = {
-        "nord": "48.6,2.1,49.1,3.0",         # ≈ 8900 km² — Paris et sa région nord
-        "sud_ouest": "44.5,-0.7,45.2,0.3",   # ≈ 9500 km² — Bordeaux et alentours
-        "sud_est": "43.2,5.3,44.0,6.3",      # ≈ 8800 km² — Marseille, Toulon
-        "ouest": "-2.0,47.0,-1.0,47.8"       # ≈ 8500 km² — Nantes, Saint-Nazaire, Ancenis
+        "nord": "1.9,48.6,3.2,49.4",         # ≈ 9 900 km² – Paris, Meaux, Évry, Roissy  - couvre Paris, banlieue, A1, A6, A3, A4 — trafic dense assuré
+        "sud_ouest": "-1.2,44.4,0.6,45.4",   # ≈ 9 600 km² – Couvre Bordeaux, Libourne, Langon, autoroutes A10 / A62 / A63
+        "sud_est": "4.8,43.0,6.5,44.3" ,     # ≈ 9 900 km² – Marseille, Toulon, Aix, autoroutes A7 / A8 / A50
+        "ouest": "-2.5,46.8,-0.5,48.2"       # ≈ 9 800 km² – Couvre Nantes, Rennes, Angers, et autoroutes A11 / A83
     }
     
     timestamps= int(datetime.now(timezone.utc).timestamp())
@@ -45,7 +45,7 @@ def fetch_traffic_incidents():
             f'&timeValidityFilter=present,future'
         )
         
-        response = requests.get(api_url)
+        # response = requests.get(api_url)
         
         try:
             response = requests.get(api_url, params=param_fields)
