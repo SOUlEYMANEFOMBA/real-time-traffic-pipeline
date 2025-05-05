@@ -1,7 +1,7 @@
 import logging
 from pyspark.sql import SparkSession
 
-class BigQueyConnectionTask():
+class BigQueyConnectionTask:
     """_summary_
     
     """

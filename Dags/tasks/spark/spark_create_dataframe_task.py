@@ -2,12 +2,12 @@ import logging
 from pyspark.sql.functions import from_json, col, posexplode
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, TimestampType, ArrayType
 
-class SparkCreateDataFrameTask():
+class SparkCreateDataFrameTask:
     """
     Classe pour gérer les tâches de streaming avec Spark, Kafka et BigQuery.
     """
 
-    def create_selection_df_from_kafka(self, spark_df):
+    def create_selection_df_from_kafka(self,spark_df):
         """
         Sélectionne et transforme les données JSON depuis Kafka en colonnes individuelles dans un DataFrame.
 
