@@ -3,4 +3,4 @@ pyspark==3.4.1
 pendulum==2.1.2
 requests==2.31.0
 python-dotenv
-apache-airflow==2.10.0
+# apache-airflow==2.10.0

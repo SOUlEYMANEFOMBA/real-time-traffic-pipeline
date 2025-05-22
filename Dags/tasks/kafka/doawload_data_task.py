@@ -2,6 +2,7 @@ import json
 import requests
 import logging
 from datetime import datetime, timezone
+from urllib.parse import urlencode
 class DoawloadDataTask():
     """
     Cette classe est responsable de l'importation des données en utilisant l'API TOMTOM des incidents routiers dans certains zone de la france
@@ -25,18 +26,19 @@ class DoawloadDataTask():
             self.fields = '{incidents{type,geometry{type,coordinates},properties{id,iconCategory,magnitudeOfDelay,startTime,endTime,from,to,length,delay,timeValidity}}}'
     
     def __build_url(self) -> str:
-        timestamp= int(datetime.now(timezone.utc).timestamp())
+        timestamp = int(datetime.now(timezone.utc).timestamp())
+        params = {
+            "key": self.api_key,
+            "bbox": self.bbox,
+            "fields": self.fields,
+            "language": self.language,
+            "t": timestamp,
+            "categoryFilter": "0,1,2,3,4,5,6,7,8,9,10,11,14",
+            "timeValidityFilter": "present,future"
+        }
+        query_string = urlencode(params)
         
-        return (
-            f"https://{self.base_url}/traffic/services/5/incidentDetails"
-            f"?key={self.api_key}"
-            f"&bbox={self.bbox}"
-            f"&fields={self.fields}"
-            f"&language={self.language}"
-            f"&t={timestamp}"
-            f"&categoryFilter=0,1,2,3,4,5,6,7,8,9,10,11,14"
-            f"&timeValidityFilter=present,future"
-        )
+        return f"https://{self.base_url}/traffic/services/5/incidentDetails?{query_string}"
     def get_data(self) -> dict:
         """
         Effectue un appel GET à l'API TomTom et retourne les données JSON sous forme de dictionnaire Python.
@@ -58,7 +60,9 @@ class DoawloadDataTask():
             
             data_parsed=json.loads(data_text) # On transforme en dictionnaire Python
             
-            logging.info("Données récupérées avec succès")
+            logging.info(f"Structure des données récupérées : {type(data_parsed)}")
+
+            logging.info(f"Données récupérées avec succès")
             return data_parsed
         except requests.exceptions.HTTPError as http_err:
             logging.error(f"Erreur HTTP : {http_err}")

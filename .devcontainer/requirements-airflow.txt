@@ -4,3 +4,4 @@ apache-airflow-providers-http==4.5.1
 apache-airflow-providers-sqlite==3.4.3
 kafka-python==2.0.2
 pyspark==3.4.1
+python-dotenv

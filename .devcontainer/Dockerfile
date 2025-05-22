@@ -1,18 +1,27 @@
-FROM  apache/airflow:2.6.0-python3.9
+# Image de base
+FROM apache/airflow:2.6.0-python3.9
 
-# Définir le répertoire de travail
-WORKDIR /opt/airflow
-
-# ## Copie le fichier requierements.txt
-COPY requirements-airflow.txt /opt/airflow/requirements-airflow.txt
-##Installer les dependances 
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements-airflow.txt
-##Copie le scipt init_airflow dans le container
-
-COPY init_airflow.sh /opt/airflow/init_airflow.sh
 USER root
+
+# Installer Java (exemple avec OpenJDK 11)
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk && \
+    apt-get clean
+
+# Définir JAVA_HOME
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+COPY init_airflow.sh /opt/airflow/init_airflow.sh
 RUN chmod +x /opt/airflow/init_airflow.sh
-# Revir à user airflow
 
 USER airflow
+# Suite de ton Dockerfile
+WORKDIR /opt/airflow
+
+COPY requirements-airflow.txt /opt/airflow/requirements-airflow.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements-airflow.txt
+
+
+
+

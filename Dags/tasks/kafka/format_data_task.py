@@ -8,7 +8,7 @@ class FormatDataTask:
         Formate une liste de dictionnaires JSON en un format standardisé.
 
         Args:
-            data_json (list): Liste de dictionnaires JSON représentant des incidents.
+            data_json (dict): Dictionnaire contenant une clé 'incidents' avec une liste d'incidents.
 
         Returns:
             list: Liste de dictionnaires formatés avec des clés spécifiques.
@@ -18,13 +18,15 @@ class FormatDataTask:
         """
         logging.info("Beginning of data format")
 
-        if not data_json:
+        incidents = data_json.get("incidents", [])
+        
+        if not incidents:
             logging.warning("Empty data received — no incident to process.")
             return []
 
         formatted_data = []
 
-        for item in data_json:
+        for item in incidents:
             try:
                 formatted = {
                     "type": item.get("type"),
